@@ -15,6 +15,7 @@ app = Flask(__name__)
 def uploadImage():
    slide_image_data = (literal_eval(request.data.decode('utf8')))
    s3_path = f'{S3Database.generate_slide_image_path(slide_image_data)}/{slide_image_data["timestamp"]}'
+   success = None 
 
    if (slide_image_data['status'] == "Y"):
       mongo_instance = MongoDatabase(app)
@@ -22,7 +23,6 @@ def uploadImage():
    else:
       s3_instance = S3Database()
       s3_instance.s3_delete(s3_path)
-      success = 1
    
    return {'response': "Y"} if success != None else {'response': "N"}
 

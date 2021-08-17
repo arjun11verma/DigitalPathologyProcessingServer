@@ -17,8 +17,9 @@ class MongoDatabase:
         slide_id = slide_image_data['slide_id']
         slide_type = slide_image_data['slide']
         cancer_type = slide_image_data['cancer']
-        upload_document = {'username': username, 'slide_id': slide_id, 'slide': slide_type, 'cancer': cancer_type, 'img_path': s3_path, 'diagnosis': "N"}
-        self.mongo_upload(upload_document)
+        timestamp = slide_image_data['timestamp']
+        upload_document = {'username': username, 'slide_id': slide_id, 'slide': slide_type, 'cancer': cancer_type, 'img_path': s3_path, 'timestamp': timestamp, 'diagnosis': "N"}
+        return self.mongo_upload(upload_document)
 
 # https://aws.amazon.com/premiumsupport/knowledge-center/decrypt-kms-encrypted-objects-s3/
 # https://boto3.amazonaws.com/v1/documentation/api/latest/index.html look at credentials section 
