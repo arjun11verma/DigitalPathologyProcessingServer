@@ -19,7 +19,7 @@ def uploadImage():
 
    if (slide_image_data['status'] == "Y"):
       mongo_instance = MongoDatabase(app)
-      success = mongo_instance.upload_slide_image(slide_image_data, s3_path)
+      success = mongo_instance.upload_slide_image(slide_image_data)
    else:
       s3_instance = S3Database()
       s3_instance.s3_delete(s3_path)
@@ -30,7 +30,7 @@ def uploadImage():
 def acceptImages():
    image_stitcher = stitcher()
    s3_instance = S3Database()
-   timestamp = (datetime.now()).strftime("%m/%d/%Y-%H:%M:%S")
+   timestamp = (datetime.now()).strftime("%m:%d:%Y-%H:%M:%S")
    slide_image_data = (literal_eval(request.data.decode('utf8')))
 
    slide_images = [slide_image_data[str(i)] for i in range(len(slide_image_data) - 4)]
