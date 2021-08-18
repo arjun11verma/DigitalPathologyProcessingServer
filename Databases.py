@@ -12,7 +12,7 @@ class MongoDatabase:
     def mongo_upload(self, data):
         return self.images.insert_one(data)
     
-    def upload_slide_image(self, slide_image_data, s3_path):
+    def upload_slide_image(self, slide_image_data):
         username = slide_image_data['username']
         slide_id = slide_image_data['slide_id']
         slide_type = slide_image_data['slide']

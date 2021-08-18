@@ -39,7 +39,7 @@ def acceptImages():
    stitched_image = converter.numpy_to_base64(stitched_image)
 
    success = s3_instance.upload_slide_image(stitched_image, slide_image_data, timestamp) if stitched_image != None else False
-   return {'response': "Y", 'imageData': stitched_image} if success else {'response': "N", 'imageData': None}
+   return {'response': "Y", 'imageData': stitched_image, 'timestamp': timestamp} if success != None else {'response': "N", 'imageData': None, 'timestamp': timestamp}
 
 def main():
    cors = CORS(app)
