@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 import sys 
+from edge import Edge
 from enum import Enum
 
 brief = cv2.xfeatures2d.BriefDescriptorExtractor_create()
@@ -148,10 +149,11 @@ def generate_graph_cut_graph(input_image, base_image):
     for i in range(base_image):
         for j in range(base_image[0]):
             if (base_image[i][j] == [0, 0, 0]):
-                edge_list.append(0) 
+                edge_list.append(Edge([i, j], [i + 1, j], sys.maxsize))
+                edge_list.append(Edge([i, j], [i, j + 1], sys.maxsize))
             else:
-                edge_list.append(cost_function(input_image[i][j], input_image[i+1][j], base_image[i][j], base_image[i+1][j]))
-                edge_list.append(cost_function(input_image[i][j], input_image[i][j+1], base_image[i][j], base_image[i][j+1]))
+                edge_list.append(Edge([i, j], [i + 1, j], cost_function(input_image[i][j], input_image[i+1][j], base_image[i][j], base_image[i+1][j])))
+                edge_list.append(Edge([i, j], [i, j + 1], cost_function(input_image[i][j], input_image[i][j+1], base_image[i][j], base_image[i][j+1])))
 
 
 def seam_carve(image_gradient, gradient_mask):
